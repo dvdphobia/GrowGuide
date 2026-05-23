@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="black">#FFFFFF</color>
+    <color name="chat_ai_bubble">#2C2C2C</color>
+    <color name="chat_ai_text">#E0E0E0</color>
+    <color name="chat_user_bubble">#4CAF50</color>
+    <color name="chat_user_text">#FFFFFF</color>
+    <color name="error_red">#EF5350</color>
+    <color name="green_on_primary">#FFFFFF</color>
+    <color name="green_on_surface">#A5D6A7</color>
+    <color name="green_primary">#4CAF50</color>
+    <color name="green_primary_container">#2E4A2F</color>
+    <color name="green_primary_dark">#388E3C</color>
+    <color name="green_secondary">#66BB6A</color>
+    <color name="green_surface">#1B1B1B</color>
+    <color name="grey_divider">#424242</color>
+    <color name="grey_text">#9E9E9E</color>
+    <color name="white">#121212</color>
+</resources>

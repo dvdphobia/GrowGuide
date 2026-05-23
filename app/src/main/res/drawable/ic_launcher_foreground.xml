@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<vector xmlns:android="http://schemas.android.com/apk/res/android"
+    android:width="108dp"
+    android:height="108dp"
+    android:viewportWidth="108"
+    android:viewportHeight="108">
+    <!-- Simple leaf/plant icon -->
+    <path
+        android:fillColor="#FFFFFF"
+        android:pathData="M54,28 C54,28 38,40 38,54 C38,68 54,80 54,80 C54,80 70,68 70,54 C70,40 54,28 54,28Z" />
+    <path
+        android:strokeColor="#FFFFFF"
+        android:strokeWidth="3"
+        android:pathData="M54,48 L54,80" />
+</vector>

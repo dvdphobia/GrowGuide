@@ -1,0 +1,23 @@
+{
+  "hooks": {
+    "preToolUse": {
+      "blockLocalProperties": {
+        "tools": ["Edit", "Write"],
+        "patterns": ["**/local.properties"],
+        "message": "local.properties contains API keys (OLLAMA_API_KEY). Do not edit it directly. Use local.properties.example as a template and copy values manually."
+      },
+      "blockGoogleServicesJson": {
+        "tools": ["Edit", "Write"],
+        "patterns": ["**/google-services.json"],
+        "message": "google-services.json contains Firebase credentials. Do not edit or commit this file."
+      }
+    },
+    "postToolUse": {
+      "compileCheck": {
+        "tools": ["Edit", "Write"],
+        "patterns": ["app/src/**/*.kt"],
+        "command": "./gradlew :app:compileDebugKotlin --quiet"
+      }
+    }
+  }
+}

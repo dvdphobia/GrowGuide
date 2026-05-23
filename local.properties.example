@@ -1,0 +1,8 @@
+# Example local.properties file for GrowGuide
+# Copy this to local.properties and fill in your values
+
+# Path to Android SDK on your machine
+# sdk.dir=/Users/yourname/Library/Android/sdk
+
+# Your Ollama API key (required for AI chat feature)
+OLLAMA_API_KEY=your_ollama_api_key_here

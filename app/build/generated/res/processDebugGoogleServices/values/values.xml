@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="gcm_defaultSenderId" translatable="false">771203682651</string>
+    <string name="google_api_key" translatable="false">AIzaSyCWpktgCYn8Ql3ve3-Inkfb-qSi1ip3E_4</string>
+    <string name="google_app_id" translatable="false">1:771203682651:android:25e1b12854f1deba184a7e</string>
+    <string name="google_crash_reporting_api_key" translatable="false">AIzaSyCWpktgCYn8Ql3ve3-Inkfb-qSi1ip3E_4</string>
+    <string name="google_storage_bucket" translatable="false">growguide-e9a34.firebasestorage.app</string>
+    <string name="project_id" translatable="false">growguide-e9a34</string>
+</resources>

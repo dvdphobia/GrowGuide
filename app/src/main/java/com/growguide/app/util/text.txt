@@ -1,0 +1,41 @@
+Here are some simple fake plant entries you can add to your app:
+
+  Name: Apple
+  Type: Fruit Tree
+  Notes: Needs full sun and well-drained soil
+  Water every: 7 days
+
+  Name: Orange
+  Type: Citrus
+  Notes: Keep soil moist but not waterlogged
+  Water every: 5 days
+
+  Name: Rose
+  Type: Flower
+  Notes: Prune in early spring, watch for aphids
+  Water every: 3 days
+
+  Name: Sunflower
+  Type: Flower
+  Notes: Grows tall, needs stakes for support
+  Water every: 4 days
+
+  Name: Tomato
+  Type: Vegetable
+  Notes: Water at base to avoid leaf disease
+  Water every: 2 days
+
+  Name: Mint
+  Type: Herb
+  Notes: Very invasive, best in containers
+  Water every: 3 days
+
+  Name: Cactus
+  Type: Succulent
+  Notes: Almost never needs watering
+  Water every: 14 days
+
+  Name: Basil
+  Type: Herb
+  Notes: Loves heat, pinch flowers to keep producing
+  Water every: 2 days

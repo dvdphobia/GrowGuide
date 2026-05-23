@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">GrowGuide</string>
+
+    <!-- Auth screens -->
+    <string name="email">Email</string>
+    <string name="password">Password</string>
+    <string name="confirm_password">Confirm Password</string>
+    <string name="login">Login</string>
+    <string name="register">Register</string>
+    <string name="dont_have_account">Don\'t have an account? Register</string>
+    <string name="already_have_account">Already have an account? Login</string>
+    <string name="passwords_must_match">Passwords must match</string>
+    <string name="auth_failed">Authentication failed. Please try again.</string>
+
+    <!-- Main screen -->
+    <string name="my_plants">My Plants</string>
+    <string name="logout">Logout</string>
+    <string name="no_plants_yet">No plants yet! Tap + to add your first plant.</string>
+    <string name="add_plant">Add Plant</string>
+    <string name="search">Search plants...</string>
+
+    <!-- Add Plant screen -->
+    <string name="plant_name">Plant Name</string>
+    <string name="plant_type">Plant Type (e.g., Tomato, Basil, Rose)</string>
+    <string name="initial_notes">Initial Notes</string>
+    <string name="save_plant">Save Plant</string>
+    <string name="plant_saved">Plant saved successfully!</string>
+    <string name="plant_photo">Plant Photo</string>
+    <string name="pick_photo">Pick Photo</string>
+
+    <!-- Plant Detail screen -->
+    <string name="plant_info">Plant Info</string>
+    <string name="growth_log">Growth Log</string>
+    <string name="ai_chat">AI Assistant</string>
+    <string name="date_added">Date Added</string>
+    <string name="add_log_entry">Add Log Entry</string>
+    <string name="type_message">Type a message for the AI assistant...</string>
+    <string name="send">Send</string>
+    <string name="thinking">AI is thinking...</string>
+    <string name="profile">Profile</string>
+    <string name="edit">Edit</string>
+    <string name="delete">Delete</string>
+    <string name="last_watered">Last watered:</string>
+    <string name="never_watered">Never watered</string>
+    <string name="water_now">Water Now</string>
+</resources>

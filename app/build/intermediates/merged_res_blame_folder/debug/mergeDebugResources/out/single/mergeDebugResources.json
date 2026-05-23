@@ -1,0 +1,102 @@
+[
+    {
+        "merged": "com.growguide.app-debug-47:/layout_activity_register.xml.flat",
+        "source": "com.growguide.app-main-49:/layout/activity_register.xml"
+    },
+    {
+        "merged": "com.growguide.app-debug-47:/layout_dialog_edit_plant.xml.flat",
+        "source": "com.growguide.app-main-49:/layout/dialog_edit_plant.xml"
+    },
+    {
+        "merged": "com.growguide.app-debug-47:/layout_item_log.xml.flat",
+        "source": "com.growguide.app-main-49:/layout/item_log.xml"
+    },
+    {
+        "merged": "com.growguide.app-debug-47:/layout_item_chat_user.xml.flat",
+        "source": "com.growguide.app-main-49:/layout/item_chat_user.xml"
+    },
+    {
+        "merged": "com.growguide.app-debug-47:/layout_item_plant.xml.flat",
+        "source": "com.growguide.app-main-49:/layout/item_plant.xml"
+    },
+    {
+        "merged": "com.growguide.app-debug-47:/layout_activity_splash.xml.flat",
+        "source": "com.growguide.app-main-49:/layout/activity_splash.xml"
+    },
+    {
+        "merged": "com.growguide.app-debug-47:/drawable_bg_card.xml.flat",
+        "source": "com.growguide.app-main-49:/drawable/bg_card.xml"
+    },
+    {
+        "merged": "com.growguide.app-debug-47:/mipmap-xxxhdpi_ic_launcher.png.flat",
+        "source": "com.growguide.app-main-49:/mipmap-xxxhdpi/ic_launcher.png"
+    },
+    {
+        "merged": "com.growguide.app-debug-47:/mipmap-hdpi_ic_launcher.png.flat",
+        "source": "com.growguide.app-main-49:/mipmap-hdpi/ic_launcher.png"
+    },
+    {
+        "merged": "com.growguide.app-debug-47:/layout_activity_login.xml.flat",
+        "source": "com.growguide.app-main-49:/layout/activity_login.xml"
+    },
+    {
+        "merged": "com.growguide.app-debug-47:/drawable_bg_chat_user.xml.flat",
+        "source": "com.growguide.app-main-49:/drawable/bg_chat_user.xml"
+    },
+    {
+        "merged": "com.growguide.app-debug-47:/drawable_ic_launcher_background.xml.flat",
+        "source": "com.growguide.app-main-49:/drawable/ic_launcher_background.xml"
+    },
+    {
+        "merged": "com.growguide.app-debug-47:/drawable_bg_chat_ai.xml.flat",
+        "source": "com.growguide.app-main-49:/drawable/bg_chat_ai.xml"
+    },
+    {
+        "merged": "com.growguide.app-debug-47:/layout_activity_plant_detail.xml.flat",
+        "source": "com.growguide.app-main-49:/layout/activity_plant_detail.xml"
+    },
+    {
+        "merged": "com.growguide.app-debug-47:/drawable_ic_launcher_foreground.xml.flat",
+        "source": "com.growguide.app-main-49:/drawable/ic_launcher_foreground.xml"
+    },
+    {
+        "merged": "com.growguide.app-debug-47:/layout_item_chat_ai.xml.flat",
+        "source": "com.growguide.app-main-49:/layout/item_chat_ai.xml"
+    },
+    {
+        "merged": "com.growguide.app-debug-47:/mipmap-xxhdpi_ic_launcher.png.flat",
+        "source": "com.growguide.app-main-49:/mipmap-xxhdpi/ic_launcher.png"
+    },
+    {
+        "merged": "com.growguide.app-debug-47:/mipmap-mdpi_ic_launcher.png.flat",
+        "source": "com.growguide.app-main-49:/mipmap-mdpi/ic_launcher.png"
+    },
+    {
+        "merged": "com.growguide.app-debug-47:/mipmap-xhdpi_ic_launcher.png.flat",
+        "source": "com.growguide.app-main-49:/mipmap-xhdpi/ic_launcher.png"
+    },
+    {
+        "merged": "com.growguide.app-debug-47:/menu_toolbar_menu.xml.flat",
+        "source": "com.growguide.app-main-49:/menu/toolbar_menu.xml"
+    },
+    {
+        "merged": "com.growguide.app-debug-47:/layout_activity_main.xml.flat",
+        "source": "com.growguide.app-main-49:/layout/activity_main.xml"
+    },
+    {
+        "merged": "com.growguide.app-debug-47:/layout_activity_profile.xml.flat",
+        "source": "com.growguide.app-main-49:/layout/activity_profile.xml"
+    },
+    {
+        "merged": "com.growguide.app-debug-47:/mipmap-anydpi-v26_ic_launcher.xml.flat",
+        "source": "com.growguide.app-main-49:/mipmap-anydpi-v26/ic_launcher.xml"
+    },
+    {
+        "merged": "com.growguide.app-debug-47:/drawable_bg_chip.xml.flat",
+        "source": "com.growguide.app-main-49:/drawable/bg_chip.xml"
+    },
+    {
+        "merged": "com.growguide.app-debug-47:/layout_activity_add_plant.xml.flat",
+        "source": "com.growguide.app-main-49:/layout/activity_add_plant.xml"
+    }
+]

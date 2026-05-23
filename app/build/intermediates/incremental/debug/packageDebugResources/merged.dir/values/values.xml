@@ -1,0 +1,77 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="black">#000000</color>
+    <color name="chat_ai_bubble">#E8E8E8</color>
+    <color name="chat_ai_text">#212121</color>
+    <color name="chat_user_bubble">#2E7D32</color>
+    <color name="chat_user_text">#FFFFFF</color>
+    <color name="error_red">#D32F2F</color>
+    <color name="green_on_primary">#FFFFFF</color>
+    <color name="green_on_surface">#1B5E20</color>
+    <color name="green_primary">#2E7D32</color>
+    <color name="green_primary_container">#A5D6A7</color>
+    <color name="green_primary_dark">#1B5E20</color>
+    <color name="green_secondary">#558B2F</color>
+    <color name="green_surface">#F1F8E9</color>
+    <color name="grey_divider">#E0E0E0</color>
+    <color name="grey_text">#757575</color>
+    <color name="white">#FFFFFF</color>
+    <string name="add_log_entry">Add Log Entry</string>
+    <string name="add_plant">Add Plant</string>
+    <string name="ai_chat">AI Assistant</string>
+    <string name="already_have_account">Already have an account? Login</string>
+    <string name="app_name">GrowGuide</string>
+    <string name="auth_failed">Authentication failed. Please try again.</string>
+    <string name="confirm_password">Confirm Password</string>
+    <string name="date_added">Date Added</string>
+    <string name="delete">Delete</string>
+    <string name="dont_have_account">Don\'t have an account? Register</string>
+    <string name="edit">Edit</string>
+    <string name="email">Email</string>
+    <string name="gcm_defaultSenderId" translatable="false">771203682651</string>
+    <string name="google_api_key" translatable="false">AIzaSyCWpktgCYn8Ql3ve3-Inkfb-qSi1ip3E_4</string>
+    <string name="google_app_id" translatable="false">1:771203682651:android:25e1b12854f1deba184a7e</string>
+    <string name="google_crash_reporting_api_key" translatable="false">AIzaSyCWpktgCYn8Ql3ve3-Inkfb-qSi1ip3E_4</string>
+    <string name="google_storage_bucket" translatable="false">growguide-e9a34.firebasestorage.app</string>
+    <string name="growth_log">Growth Log</string>
+    <string name="initial_notes">Initial Notes</string>
+    <string name="last_watered">Last watered:</string>
+    <string name="login">Login</string>
+    <string name="logout">Logout</string>
+    <string name="my_plants">My Plants</string>
+    <string name="never_watered">Never watered</string>
+    <string name="no_plants_yet">No plants yet! Tap + to add your first plant.</string>
+    <string name="password">Password</string>
+    <string name="passwords_must_match">Passwords must match</string>
+    <string name="pick_photo">Pick Photo</string>
+    <string name="plant_info">Plant Info</string>
+    <string name="plant_name">Plant Name</string>
+    <string name="plant_photo">Plant Photo</string>
+    <string name="plant_saved">Plant saved successfully!</string>
+    <string name="plant_type">Plant Type (e.g., Tomato, Basil, Rose)</string>
+    <string name="profile">Profile</string>
+    <string name="project_id" translatable="false">growguide-e9a34</string>
+    <string name="register">Register</string>
+    <string name="save_plant">Save Plant</string>
+    <string name="search">Search plants...</string>
+    <string name="send">Send</string>
+    <string name="thinking">AI is thinking...</string>
+    <string name="type_message">Type a message for the AI assistant...</string>
+    <string name="water_now">Water Now</string>
+    <style name="Theme.GrowGuide" parent="Theme.Material3.DayNight.NoActionBar">
+        <item name="colorPrimary">@color/green_primary</item>
+        <item name="colorPrimaryDark">@color/green_primary_dark</item>
+        <item name="colorPrimaryContainer">@color/green_primary_container</item>
+        <item name="colorOnPrimary">@color/green_on_primary</item>
+        <item name="colorSecondary">@color/green_secondary</item>
+        <item name="colorSurface">@color/green_surface</item>
+        <item name="colorOnSurface">@color/green_on_surface</item>
+        <item name="android:statusBarColor">@color/green_primary</item>
+        <item name="android:navigationBarColor">@color/white</item>
+    </style>
+    <style name="Theme.GrowGuide.Splash" parent="Theme.Material3.DayNight.NoActionBar">
+        <item name="colorPrimary">@color/green_primary</item>
+        <item name="android:statusBarColor">@color/green_primary</item>
+        <item name="android:windowBackground">@color/green_primary</item>
+    </style>
+</resources>
