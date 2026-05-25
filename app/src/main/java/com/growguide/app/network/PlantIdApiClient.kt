@@ -9,14 +9,14 @@ import java.io.File
 import java.io.IOException
 
 /**
- * Client for the Plant.id API (free tier: 100 requests/day).
+ * Client for the Pl@ntNet API (free tier).
  * Uploads a plant photo and returns identification suggestions.
  *
- * Requires PLANT_ID_API_KEY in local.properties.
+ * Requires PLANTNET_API_KEY in local.properties.
+ * Get a key at: https://my.plantnet.org/settings/api-key
  */
 object PlantIdApiClient {
 
-    private const val BASE_URL = "https://api.plant.id/v3/identification"
     private val client = OkHttpClient()
     private val gson = Gson()
 
@@ -27,22 +27,22 @@ object PlantIdApiClient {
     )
 
     fun identifyPlant(photoFile: File, callback: (IdentifyResult?) -> Unit) {
-        val apiKey = BuildConfig.PLANT_ID_API_KEY
+        val apiKey = BuildConfig.PLANTNET_API_KEY
         if (apiKey.isBlank()) {
             callback(null)
             return
         }
 
+        val url = "https://my-api.plantnet.org/v2/identify/all?api-key=$apiKey"
+
         val mediaType = "image/jpeg".toMediaTypeOrNull()
         val requestBody = MultipartBody.Builder()
             .setType(MultipartBody.FORM)
             .addFormDataPart("images", photoFile.name, photoFile.asRequestBody(mediaType))
-            .addFormDataPart("similar_images", "true")
             .build()
 
         val request = Request.Builder()
-            .url(BASE_URL)
-            .header("Api-Key", apiKey)
+            .url(url)
             .post(requestBody)
             .build()
 
@@ -67,32 +67,27 @@ object PlantIdApiClient {
         if (json.isNullOrBlank()) return null
         return try {
             val root = gson.fromJson(json, Map::class.java) as Map<*, *>
+            val results = root["results"] as? List<*> ?: return null
+            val first = results.firstOrNull() as? Map<*, *> ?: return null
 
-            // Try v3 structure first: result.classification.suggestions
-            val result = root["result"] as? Map<*, *>
-            val classification = result?.get("classification") as? Map<*, *>
-            val suggestions = classification?.get("suggestions") as? List<*>
+            val score = first["score"] as? Double ?: 0.0
+            if (score < 0.1) return null
 
-            // Fallback to v2 structure: suggestions directly on root
-            val finalSuggestions = suggestions
-                ?: (root["suggestions"] as? List<*>)
-                ?: emptyList()
+            val species = first["species"] as? Map<*, *> ?: return null
 
-            val first = finalSuggestions.firstOrNull() as? Map<*, *> ?: return null
-
-            val name = (first["name"] as? String)
-                ?: (first["plant_name"] as? String)
+            val name = species["scientificNameWithoutAuthor"] as? String
+                ?: species["scientificName"] as? String
                 ?: "Unknown plant"
 
-            val probability = first["probability"] as? Double ?: 0.0
-            if (probability < 0.3) return null
-
-            val details = first["details"] as? Map<*, *>
-            val commonNames = details?.get("common_names") as? List<*>
+            val commonNames = species["commonNames"] as? List<*>
             val commonName = commonNames?.firstOrNull() as? String ?: ""
 
-            val descriptionMap = details?.get("description") as? Map<*, *>
-            val description = descriptionMap?.get("value") as? String ?: ""
+            val family = species["family"] as? Map<*, *>
+            val familyName = family?.get("scientificNameWithoutAuthor") as? String ?: ""
+
+            val description = if (familyName.isNotBlank()) {
+                "Family: $familyName"
+            } else ""
 
             IdentifyResult(name, commonName, description)
         } catch (e: Exception) {
