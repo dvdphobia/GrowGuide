@@ -4,5 +4,9 @@
 # Path to Android SDK on your machine
 # sdk.dir=/Users/yourname/Library/Android/sdk
 
-# Your Ollama API key (required for AI chat and plant photo identification)
+# Your Ollama API key (required for AI chat)
 OLLAMA_API_KEY=your_ollama_api_key_here
+
+# Your Pl@ntNet API key (required for plant photo identification)
+# Get a free key at: https://my.plantnet.org/settings/api-key
+PLANTNET_API_KEY=your_plantnet_api_key_here

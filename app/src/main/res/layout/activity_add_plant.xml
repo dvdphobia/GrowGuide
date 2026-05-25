@@ -85,17 +85,34 @@
                     app:strokeWidth="1dp" />
             </LinearLayout>
 
-            <com.google.android.material.button.MaterialButton
-                android:id="@+id/identifyButton"
-                style="@style/Widget.GrowGuide.Button.Secondary"
+            <LinearLayout
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center_horizontal"
                 android:layout_marginTop="@dimen/space_8"
-                android:text="@string/identify_plant"
-                android:textSize="@dimen/text_caption"
-                app:strokeColor="@color/primary"
-                app:strokeWidth="1dp" />
+                android:orientation="horizontal">
+
+                <com.google.android.material.button.MaterialButton
+                    android:id="@+id/identifyPlantNetButton"
+                    style="@style/Widget.GrowGuide.Button.Secondary"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/identify_plantnet"
+                    android:textSize="@dimen/text_caption"
+                    app:strokeColor="@color/primary"
+                    app:strokeWidth="1dp" />
+
+                <com.google.android.material.button.MaterialButton
+                    android:id="@+id/identifyOllamaButton"
+                    style="@style/Widget.GrowGuide.Button.Secondary"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="@dimen/space_12"
+                    android:text="@string/identify_ollama"
+                    android:textSize="@dimen/text_caption"
+                    app:strokeColor="@color/secondary"
+                    app:strokeWidth="1dp" />
+            </LinearLayout>
 
             <!-- Form fields -->
             <com.google.android.material.textfield.TextInputLayout

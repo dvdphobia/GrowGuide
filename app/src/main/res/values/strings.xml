@@ -51,10 +51,11 @@
     <string name="leaf_count">Leaf Count</string>
     <string name="growth_chart">Growth Chart</string>
     <string name="take_photo">Take Photo</string>
-    <string name="identify_plant">Identify Plant</string>
+    <string name="identify_plantnet">Identify via PlantNet</string>
+    <string name="identify_ollama">Identify via AI</string>
     <string name="identifying">Identifying…</string>
     <string name="identify_success">Identified as %1$s</string>
     <string name="identify_no_photo">Please pick or take a photo first.</string>
-    <string name="identify_no_key">Ollama API key not configured. Add OLLAMA_API_KEY to local.properties.</string>
+    <string name="identify_no_key">Pl@ntNet API key not configured. Add PLANTNET_API_KEY to local.properties.</string>
     <string name="identify_failed">Could not identify plant. Please enter details manually.</string>
 </resources>

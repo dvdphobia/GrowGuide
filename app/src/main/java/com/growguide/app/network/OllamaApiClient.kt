@@ -4,6 +4,7 @@ import android.util.Base64
 import com.google.gson.Gson
 import com.google.gson.annotations.SerializedName
 import com.growguide.app.BuildConfig
+import com.growguide.app.models.IdentifyResult
 import okhttp3.*
 import okhttp3.MediaType.Companion.toMediaType
 import okhttp3.RequestBody.Companion.toRequestBody
@@ -32,12 +33,6 @@ object OllamaApiClient {
     private val client = OkHttpClient()
     private val gson = Gson()
     private val jsonMediaType = "application/json; charset=utf-8".toMediaType()
-
-    data class IdentifyResult(
-        val name: String,
-        val commonName: String,
-        val description: String
-    )
 
     /**
      * Sends a user message to Ollama and returns the AI response text.

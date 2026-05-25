@@ -16,6 +16,7 @@ import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.FirebaseFirestore
 import com.growguide.app.R
 import com.growguide.app.network.OllamaApiClient
+import com.growguide.app.network.PlantNetApiClient
 import com.growguide.app.util.ReminderScheduler
 import com.google.android.material.appbar.MaterialToolbar
 import com.google.android.material.button.MaterialButton
@@ -72,7 +73,8 @@ class AddPlantActivity : AppCompatActivity() {
         val progressBar = findViewById<android.widget.ProgressBar>(R.id.progressBar)
         val pickPhotoButton = findViewById<MaterialButton>(R.id.pickPhotoButton)
         val takePhotoButton = findViewById<MaterialButton>(R.id.takePhotoButton)
-        val identifyButton = findViewById<MaterialButton>(R.id.identifyButton)
+        val identifyPlantNetButton = findViewById<MaterialButton>(R.id.identifyPlantNetButton)
+        val identifyOllamaButton = findViewById<MaterialButton>(R.id.identifyOllamaButton)
 
         pickPhotoButton.setOnClickListener {
             val intent = Intent(Intent.ACTION_PICK, MediaStore.Images.Media.EXTERNAL_CONTENT_URI)
@@ -83,41 +85,15 @@ class AddPlantActivity : AppCompatActivity() {
             launchCamera()
         }
 
-        identifyButton.setOnClickListener {
-            val file = photoFile
-            if (file == null || !file.exists()) {
-                Toast.makeText(this, R.string.identify_no_photo, Toast.LENGTH_SHORT).show()
-                return@setOnClickListener
+        identifyPlantNetButton.setOnClickListener {
+            runIdentification(identifyPlantNetButton, saveButton, progressBar) {
+                PlantNetApiClient.identifyPlant(it) { result -> handleIdentifyResult(result, identifyPlantNetButton, saveButton, progressBar) }
             }
+        }
 
-            progressBar.visibility = View.VISIBLE
-            identifyButton.isEnabled = false
-            saveButton.isEnabled = false
-
-            OllamaApiClient.identifyPlant(file) { result ->
-                runOnUiThread {
-                    progressBar.visibility = View.GONE
-                    identifyButton.isEnabled = true
-                    saveButton.isEnabled = true
-
-                    if (result == null) {
-                        Toast.makeText(this, R.string.identify_failed, Toast.LENGTH_LONG).show()
-                        return@runOnUiThread
-                    }
-
-                    nameEditText.setText(result.name)
-                    if (result.commonName.isNotBlank()) {
-                        typeEditText.setText(result.commonName)
-                    }
-                    if (result.description.isNotBlank() && notesEditText.text.isNullOrBlank()) {
-                        notesEditText.setText(result.description)
-                    }
-                    Toast.makeText(
-                        this,
-                        getString(R.string.identify_success, result.name),
-                        Toast.LENGTH_SHORT
-                    ).show()
-                }
+        identifyOllamaButton.setOnClickListener {
+            runIdentification(identifyOllamaButton, saveButton, progressBar) {
+                OllamaApiClient.identifyPlant(it) { result -> handleIdentifyResult(result, identifyOllamaButton, saveButton, progressBar) }
             }
         }
 
@@ -140,6 +116,60 @@ class AddPlantActivity : AppCompatActivity() {
 
             val photoPath = if (photoFile != null && photoFile!!.exists()) photoFile!!.absolutePath else ""
             savePlant(userId, name, type, notes, wateringFrequency, photoPath, progressBar, saveButton)
+        }
+    }
+
+    private fun runIdentification(
+        identifyButton: MaterialButton,
+        saveButton: MaterialButton,
+        progressBar: android.widget.ProgressBar,
+        apiCall: (File) -> Unit
+    ) {
+        val file = photoFile
+        if (file == null || !file.exists()) {
+            Toast.makeText(this, R.string.identify_no_photo, Toast.LENGTH_SHORT).show()
+            return
+        }
+
+        progressBar.visibility = View.VISIBLE
+        identifyButton.isEnabled = false
+        saveButton.isEnabled = false
+
+        apiCall(file)
+    }
+
+    private fun handleIdentifyResult(
+        result: com.growguide.app.models.IdentifyResult?,
+        identifyButton: MaterialButton,
+        saveButton: MaterialButton,
+        progressBar: android.widget.ProgressBar
+    ) {
+        runOnUiThread {
+            progressBar.visibility = View.GONE
+            identifyButton.isEnabled = true
+            saveButton.isEnabled = true
+
+            val nameEditText = findViewById<TextInputEditText>(R.id.plantNameEditText)
+            val typeEditText = findViewById<TextInputEditText>(R.id.plantTypeEditText)
+            val notesEditText = findViewById<TextInputEditText>(R.id.notesEditText)
+
+            if (result == null) {
+                Toast.makeText(this, R.string.identify_failed, Toast.LENGTH_LONG).show()
+                return@runOnUiThread
+            }
+
+            nameEditText.setText(result.name)
+            if (result.commonName.isNotBlank()) {
+                typeEditText.setText(result.commonName)
+            }
+            if (result.description.isNotBlank() && notesEditText.text.isNullOrBlank()) {
+                notesEditText.setText(result.description)
+            }
+            Toast.makeText(
+                this,
+                getString(R.string.identify_success, result.name),
+                Toast.LENGTH_SHORT
+            ).show()
         }
     }
 
