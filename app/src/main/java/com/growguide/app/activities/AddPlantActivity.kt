@@ -15,7 +15,7 @@ import com.google.firebase.Timestamp
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.FirebaseFirestore
 import com.growguide.app.R
-import com.growguide.app.network.PlantIdApiClient
+import com.growguide.app.network.OllamaApiClient
 import com.growguide.app.util.ReminderScheduler
 import com.google.android.material.appbar.MaterialToolbar
 import com.google.android.material.button.MaterialButton
@@ -94,7 +94,7 @@ class AddPlantActivity : AppCompatActivity() {
             identifyButton.isEnabled = false
             saveButton.isEnabled = false
 
-            PlantIdApiClient.identifyPlant(file) { result ->
+            OllamaApiClient.identifyPlant(file) { result ->
                 runOnUiThread {
                     progressBar.visibility = View.GONE
                     identifyButton.isEnabled = true
