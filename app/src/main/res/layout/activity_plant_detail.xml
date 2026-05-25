@@ -205,14 +205,33 @@
             </com.google.android.material.card.MaterialCardView>
 
             <!-- ── Section 2: Growth Log ── -->
-            <TextView
-                android:layout_width="wrap_content"
+            <LinearLayout
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="@dimen/space_32"
-                android:text="@string/growth_log"
-                android:textColor="@color/on_surface"
-                android:textSize="@dimen/text_title"
-                android:textStyle="bold" />
+                android:gravity="center_vertical"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:text="@string/growth_log"
+                    android:textColor="@color/on_surface"
+                    android:textSize="@dimen/text_title"
+                    android:textStyle="bold" />
+
+                <com.google.android.material.button.MaterialButton
+                    android:id="@+id/viewChartButton"
+                    style="@style/Widget.GrowGuide.Button.Secondary"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="@dimen/space_12"
+                    android:text="@string/view_chart"
+                    android:textSize="@dimen/text_caption"
+                    app:strokeColor="@color/primary"
+                    app:strokeWidth="1dp" />
+            </LinearLayout>
 
             <!-- Add log entry input -->
             <LinearLayout
@@ -244,9 +263,50 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginStart="@dimen/space_12"
-                    android:text="@string/save_plant"
+                    android:text="@string/save_log"
                     android:textSize="@dimen/text_caption" />
 
+            </LinearLayout>
+
+            <!-- Optional numeric fields for growth tracking -->
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/space_8"
+                android:orientation="horizontal">
+
+                <com.google.android.material.textfield.TextInputLayout
+                    style="@style/Widget.GrowGuide.TextInput"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:hint="@string/height_cm"
+                    app:boxBackgroundColor="@color/surface">
+
+                    <com.google.android.material.textfield.TextInputEditText
+                        android:id="@+id/logHeightEditText"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:inputType="number"
+                        android:textColor="@color/on_surface" />
+                </com.google.android.material.textfield.TextInputLayout>
+
+                <com.google.android.material.textfield.TextInputLayout
+                    style="@style/Widget.GrowGuide.TextInput"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="@dimen/space_12"
+                    android:layout_weight="1"
+                    android:hint="@string/leaf_count"
+                    app:boxBackgroundColor="@color/surface">
+
+                    <com.google.android.material.textfield.TextInputEditText
+                        android:id="@+id/logLeafCountEditText"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:inputType="number"
+                        android:textColor="@color/on_surface" />
+                </com.google.android.material.textfield.TextInputLayout>
             </LinearLayout>
 
             <!-- Log entries list -->

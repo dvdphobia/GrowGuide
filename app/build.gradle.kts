@@ -13,6 +13,7 @@ if (localPropertiesFile.exists()) {
     localProperties.load(localPropertiesFile.inputStream())
 }
 val ollamaApiKey: String = localProperties.getProperty("OLLAMA_API_KEY") ?: ""
+val plantIdApiKey: String = localProperties.getProperty("PLANT_ID_API_KEY") ?: ""
 
 android {
     namespace = "com.growguide.app"
@@ -27,6 +28,7 @@ android {
 
         // Expose the API key as a BuildConfig constant
         buildConfigField("String", "OLLAMA_API_KEY", "\"$ollamaApiKey\"")
+        buildConfigField("String", "PLANT_ID_API_KEY", "\"$plantIdApiKey\"")
     }
 
     buildFeatures {
@@ -68,4 +70,7 @@ dependencies {
 
     // Markwon for rendering markdown in chat bubbles
     implementation("io.noties.markwon:core:4.6.2")
+
+    // MPAndroidChart for growth timeline visualization
+    implementation("com.github.PhilJay:MPAndroidChart:v3.1.0")
 }

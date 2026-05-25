@@ -44,4 +44,17 @@
     <string name="last_watered">Last watered:</string>
     <string name="never_watered">Never watered</string>
     <string name="water_now">Water Now</string>
+    <string name="watering_frequency_days">Watering Frequency (days)</string>
+    <string name="view_chart">View Chart</string>
+    <string name="save_log">Add</string>
+    <string name="height_cm">Height (cm)</string>
+    <string name="leaf_count">Leaf Count</string>
+    <string name="growth_chart">Growth Chart</string>
+    <string name="take_photo">Take Photo</string>
+    <string name="identify_plant">Identify Plant</string>
+    <string name="identifying">Identifying…</string>
+    <string name="identify_success">Identified as %1$s</string>
+    <string name="identify_no_photo">Please pick or take a photo first.</string>
+    <string name="identify_no_key">Plant.id API key not configured. Add PLANT_ID_API_KEY to local.properties.</string>
+    <string name="identify_failed">Could not identify plant. Please enter details manually.</string>
 </resources>

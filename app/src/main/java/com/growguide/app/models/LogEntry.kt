@@ -12,6 +12,14 @@ data class LogEntry(
     @set:PropertyName("entry")
     var entry: String = "",
 
+    @get:PropertyName("heightCm")
+    @set:PropertyName("heightCm")
+    var heightCm: Int = 0,
+
+    @get:PropertyName("leafCount")
+    @set:PropertyName("leafCount")
+    var leafCount: Int = 0,
+
     @get:PropertyName("createdAt")
     @set:PropertyName("createdAt")
     var createdAt: Timestamp? = null,

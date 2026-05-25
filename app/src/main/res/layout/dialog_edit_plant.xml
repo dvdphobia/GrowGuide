@@ -49,4 +49,19 @@
             android:minLines="3"
             android:textColor="@color/on_surface" />
     </com.google.android.material.textfield.TextInputLayout>
+
+    <com.google.android.material.textfield.TextInputLayout
+        style="@style/Widget.GrowGuide.TextInput"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/space_16"
+        android:hint="@string/watering_frequency_days">
+
+        <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/editPlantWateringFreq"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:inputType="number"
+            android:textColor="@color/on_surface" />
+    </com.google.android.material.textfield.TextInputLayout>
 </LinearLayout>

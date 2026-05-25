@@ -3,7 +3,6 @@ package com.growguide.app.activities
 import android.app.Activity
 import android.content.Intent
 import android.net.Uri
-import android.os.Build
 import android.os.Bundle
 import android.provider.MediaStore
 import android.view.View
@@ -11,10 +10,13 @@ import android.widget.ImageView
 import android.widget.Toast
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.content.FileProvider
 import com.google.firebase.Timestamp
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.FirebaseFirestore
 import com.growguide.app.R
+import com.growguide.app.network.PlantIdApiClient
+import com.growguide.app.util.ReminderScheduler
 import com.google.android.material.appbar.MaterialToolbar
 import com.google.android.material.button.MaterialButton
 import com.google.android.material.textfield.TextInputEditText
@@ -24,8 +26,8 @@ import java.util.Date
 
 /**
  * Form screen for adding a new plant to the user's collection.
- * Supports photo selection, watering frequency, and notes.
- * Writes the plant document to Firestore at users/{userId}/plants/.
+ * Supports photo selection, camera capture, AI identification via Plant.id,
+ * watering frequency, and notes.
  */
 class AddPlantActivity : AppCompatActivity() {
 
@@ -40,6 +42,14 @@ class AddPlantActivity : AppCompatActivity() {
             val uri = result.data?.data ?: return@registerForActivityResult
             photoFile = copyUriToLocalFile(uri)
             findViewById<ImageView>(R.id.plantPhotoPreview).setImageURI(uri)
+        }
+    }
+
+    private val takePhotoLauncher = registerForActivityResult(
+        ActivityResultContracts.TakePicture()
+    ) { success ->
+        if (success && photoFile != null && photoFile!!.exists()) {
+            findViewById<ImageView>(R.id.plantPhotoPreview).setImageURI(Uri.fromFile(photoFile))
         }
     }
 
@@ -61,10 +71,54 @@ class AddPlantActivity : AppCompatActivity() {
         val saveButton = findViewById<MaterialButton>(R.id.savePlantButton)
         val progressBar = findViewById<android.widget.ProgressBar>(R.id.progressBar)
         val pickPhotoButton = findViewById<MaterialButton>(R.id.pickPhotoButton)
+        val takePhotoButton = findViewById<MaterialButton>(R.id.takePhotoButton)
+        val identifyButton = findViewById<MaterialButton>(R.id.identifyButton)
 
         pickPhotoButton.setOnClickListener {
             val intent = Intent(Intent.ACTION_PICK, MediaStore.Images.Media.EXTERNAL_CONTENT_URI)
             pickPhotoLauncher.launch(intent)
+        }
+
+        takePhotoButton.setOnClickListener {
+            launchCamera()
+        }
+
+        identifyButton.setOnClickListener {
+            val file = photoFile
+            if (file == null || !file.exists()) {
+                Toast.makeText(this, R.string.identify_no_photo, Toast.LENGTH_SHORT).show()
+                return@setOnClickListener
+            }
+
+            progressBar.visibility = View.VISIBLE
+            identifyButton.isEnabled = false
+            saveButton.isEnabled = false
+
+            PlantIdApiClient.identifyPlant(file) { result ->
+                runOnUiThread {
+                    progressBar.visibility = View.GONE
+                    identifyButton.isEnabled = true
+                    saveButton.isEnabled = true
+
+                    if (result == null) {
+                        Toast.makeText(this, R.string.identify_failed, Toast.LENGTH_LONG).show()
+                        return@runOnUiThread
+                    }
+
+                    nameEditText.setText(result.name)
+                    if (result.commonName.isNotBlank()) {
+                        typeEditText.setText(result.commonName)
+                    }
+                    if (result.description.isNotBlank() && notesEditText.text.isNullOrBlank()) {
+                        notesEditText.setText(result.description)
+                    }
+                    Toast.makeText(
+                        this,
+                        getString(R.string.identify_success, result.name),
+                        Toast.LENGTH_SHORT
+                    ).show()
+                }
+            }
         }
 
         saveButton.setOnClickListener {
@@ -87,6 +141,18 @@ class AddPlantActivity : AppCompatActivity() {
             val photoPath = if (photoFile != null && photoFile!!.exists()) photoFile!!.absolutePath else ""
             savePlant(userId, name, type, notes, wateringFrequency, photoPath, progressBar, saveButton)
         }
+    }
+
+    private fun launchCamera() {
+        val photosDir = File(filesDir, "photos").apply { mkdirs() }
+        val file = File(photosDir, "camera_${System.currentTimeMillis()}.jpg")
+        photoFile = file
+        val uri = FileProvider.getUriForFile(
+            this,
+            "${packageName}.fileprovider",
+            file
+        )
+        takePhotoLauncher.launch(uri)
     }
 
     /**
@@ -122,9 +188,16 @@ class AddPlantActivity : AppCompatActivity() {
             .document(userId)
             .collection("plants")
             .add(plantData)
-            .addOnSuccessListener {
+            .addOnSuccessListener { docRef ->
                 progressBar.visibility = View.GONE
                 Toast.makeText(this, R.string.plant_saved, Toast.LENGTH_SHORT).show()
+                ReminderScheduler.scheduleWateringReminder(
+                    this,
+                    docRef.id,
+                    name,
+                    null,
+                    wateringFrequency
+                )
                 finish()
             }
             .addOnFailureListener { e ->

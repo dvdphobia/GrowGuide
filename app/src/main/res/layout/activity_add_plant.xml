@@ -56,16 +56,45 @@
                     app:tint="@color/on_surface_variant" />
             </FrameLayout>
 
-            <com.google.android.material.button.MaterialButton
-                android:id="@+id/pickPhotoButton"
-                style="@style/Widget.GrowGuide.Button.Secondary"
+            <LinearLayout
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center_horizontal"
                 android:layout_marginTop="@dimen/space_12"
-                android:text="Pick Photo"
+                android:orientation="horizontal">
+
+                <com.google.android.material.button.MaterialButton
+                    android:id="@+id/pickPhotoButton"
+                    style="@style/Widget.GrowGuide.Button.Secondary"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/pick_photo"
+                    android:textSize="@dimen/text_caption"
+                    app:strokeColor="@color/outline"
+                    app:strokeWidth="1dp" />
+
+                <com.google.android.material.button.MaterialButton
+                    android:id="@+id/takePhotoButton"
+                    style="@style/Widget.GrowGuide.Button.Secondary"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="@dimen/space_12"
+                    android:text="@string/take_photo"
+                    android:textSize="@dimen/text_caption"
+                    app:strokeColor="@color/outline"
+                    app:strokeWidth="1dp" />
+            </LinearLayout>
+
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/identifyButton"
+                style="@style/Widget.GrowGuide.Button.Secondary"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_horizontal"
+                android:layout_marginTop="@dimen/space_8"
+                android:text="@string/identify_plant"
                 android:textSize="@dimen/text_caption"
-                app:strokeColor="@color/outline"
+                app:strokeColor="@color/primary"
                 app:strokeWidth="1dp" />
 
             <!-- Form fields -->

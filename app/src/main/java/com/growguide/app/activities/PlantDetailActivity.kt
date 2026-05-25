@@ -1,6 +1,7 @@
 package com.growguide.app.activities
 
 import android.app.AlertDialog
+import android.content.Intent
 import android.net.Uri
 import android.os.Bundle
 import android.view.View
@@ -26,6 +27,7 @@ import com.growguide.app.adapters.LogAdapter
 import com.growguide.app.models.ChatMessage
 import com.growguide.app.models.LogEntry
 import com.growguide.app.network.OllamaApiClient
+import com.growguide.app.util.ReminderScheduler
 import java.text.SimpleDateFormat
 import java.util.*
 
@@ -156,6 +158,9 @@ class PlantDetailActivity : AppCompatActivity() {
             .addOnSuccessListener {
                 plantLastWateredSeconds = now.seconds
                 updateWateringStatus()
+                ReminderScheduler.scheduleWateringReminder(
+                    this, plantId, plantName, now, plantWateringFreq
+                )
                 Toast.makeText(this, "Plant watered!", Toast.LENGTH_SHORT).show()
             }
             .addOnFailureListener { e ->
@@ -170,7 +175,10 @@ class PlantDetailActivity : AppCompatActivity() {
     private fun setupGrowthLog() {
         val logRecyclerView = findViewById<RecyclerView>(R.id.logRecyclerView)
         val logEntryEditText = findViewById<EditText>(R.id.logEntryEditText)
+        val logHeightEditText = findViewById<EditText>(R.id.logHeightEditText)
+        val logLeafCountEditText = findViewById<EditText>(R.id.logLeafCountEditText)
         val addLogButton = findViewById<android.widget.Button>(R.id.addLogButton)
+        val viewChartButton = findViewById<android.widget.Button>(R.id.viewChartButton)
         val noLogsText = findViewById<TextView>(R.id.noLogsText)
 
         logRecyclerView.layoutManager = LinearLayoutManager(this)
@@ -180,6 +188,15 @@ class PlantDetailActivity : AppCompatActivity() {
         )
         logRecyclerView.adapter = logAdapter
 
+        viewChartButton.setOnClickListener {
+            val intent = Intent(this, PlantGrowthChartActivity::class.java).apply {
+                putExtra("PLANT_ID", plantId)
+                putExtra("PLANT_NAME", plantName)
+            }
+            startActivity(intent)
+            overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left)
+        }
+
         addLogButton.setOnClickListener {
             val entry = logEntryEditText.text.toString().trim()
             if (entry.isEmpty()) {
@@ -187,9 +204,14 @@ class PlantDetailActivity : AppCompatActivity() {
                 return@setOnClickListener
             }
 
+            val heightCm = logHeightEditText.text.toString().toIntOrNull() ?: 0
+            val leafCount = logLeafCountEditText.text.toString().toIntOrNull() ?: 0
+
             val userId = auth.currentUser?.uid ?: return@setOnClickListener
             val logData = hashMapOf(
                 "entry" to entry,
+                "heightCm" to heightCm,
+                "leafCount" to leafCount,
                 "createdAt" to Timestamp(Date())
             )
 
@@ -199,6 +221,8 @@ class PlantDetailActivity : AppCompatActivity() {
                 .add(logData)
                 .addOnSuccessListener {
                     logEntryEditText.text.clear()
+                    logHeightEditText.text.clear()
+                    logLeafCountEditText.text.clear()
                 }
                 .addOnFailureListener { e ->
                     Toast.makeText(this, "Error: ${e.message}", Toast.LENGTH_SHORT).show()
@@ -229,20 +253,34 @@ class PlantDetailActivity : AppCompatActivity() {
     }
 
     private fun showEditLogDialog(log: LogEntry) {
-        val editText = EditText(this)
-        editText.setText(log.entry)
+        val layout = layoutInflater.inflate(R.layout.dialog_edit_log, null)
+        val entryEdit = layout.findViewById<EditText>(R.id.editLogEntry)
+        val heightEdit = layout.findViewById<EditText>(R.id.editLogHeight)
+        val leafEdit = layout.findViewById<EditText>(R.id.editLogLeafCount)
+
+        entryEdit.setText(log.entry)
+        if (log.heightCm > 0) heightEdit.setText(log.heightCm.toString())
+        if (log.leafCount > 0) leafEdit.setText(log.leafCount.toString())
 
         AlertDialog.Builder(this)
             .setTitle("Edit Log Entry")
-            .setView(editText)
+            .setView(layout)
             .setPositiveButton("Save") { _, _ ->
-                val newText = editText.text.toString().trim()
+                val newText = entryEdit.text.toString().trim()
                 if (newText.isEmpty()) return@setPositiveButton
+                val newHeight = heightEdit.text.toString().toIntOrNull() ?: 0
+                val newLeaves = leafEdit.text.toString().toIntOrNull() ?: 0
                 val userId = auth.currentUser?.uid ?: return@setPositiveButton
                 db.collection("users").document(userId)
                     .collection("plants").document(plantId)
                     .collection("logs").document(log.id)
-                    .update("entry", newText)
+                    .update(
+                        mapOf(
+                            "entry" to newText,
+                            "heightCm" to newHeight,
+                            "leafCount" to newLeaves
+                        )
+                    )
                     .addOnFailureListener { e ->
                         Toast.makeText(this, "Error: ${e.message}", Toast.LENGTH_SHORT).show()
                     }
@@ -399,10 +437,12 @@ class PlantDetailActivity : AppCompatActivity() {
         val nameEdit = layout.findViewById<TextInputEditText>(R.id.editPlantName)
         val typeEdit = layout.findViewById<TextInputEditText>(R.id.editPlantType)
         val notesEdit = layout.findViewById<TextInputEditText>(R.id.editPlantNotes)
+        val freqEdit = layout.findViewById<TextInputEditText>(R.id.editPlantWateringFreq)
 
         nameEdit.setText(nameText.text)
         typeEdit.setText(typeText.text.removePrefix("Type: "))
         notesEdit.setText(notesText.text)
+        freqEdit.setText(plantWateringFreq.toString())
 
         AlertDialog.Builder(this)
             .setTitle("Edit Plant")
@@ -411,35 +451,47 @@ class PlantDetailActivity : AppCompatActivity() {
                 val newName = nameEdit.text.toString().trim()
                 val newType = typeEdit.text.toString().trim()
                 val newNotes = notesEdit.text.toString().trim()
+                val newFreq = freqEdit.text.toString().toIntOrNull() ?: plantWateringFreq
                 if (newName.isEmpty()) {
                     Toast.makeText(this, "Plant name is required.", Toast.LENGTH_SHORT).show()
                     return@setPositiveButton
                 }
-                updatePlant(newName, newType, newNotes)
+                updatePlant(newName, newType, newNotes, newFreq)
             }
             .setNegativeButton("Cancel", null)
             .show()
     }
 
-    private fun updatePlant(name: String, type: String, notes: String) {
+    private fun updatePlant(name: String, type: String, notes: String, wateringFrequency: Int) {
         val userId = auth.currentUser?.uid ?: return
+        val updates = mutableMapOf<String, Any>(
+            "name" to name,
+            "type" to type,
+            "notes" to notes
+        )
+        if (wateringFrequency != plantWateringFreq) {
+            updates["wateringFrequency"] = wateringFrequency
+        }
+
         db.collection("users").document(userId)
             .collection("plants").document(plantId)
-            .update(
-                mapOf(
-                    "name" to name,
-                    "type" to type,
-                    "notes" to notes
-                )
-            )
+            .update(updates)
             .addOnSuccessListener {
                 plantName = name
                 plantType = type
                 plantNotes = notes
+                plantWateringFreq = wateringFrequency
                 nameText.text = name
                 typeText.text = "Type: $type"
                 notesText.text = notes
+                updateWateringStatus()
                 supportActionBar?.title = name
+                val lastWatered = if (plantLastWateredSeconds > 0) {
+                    Timestamp(Date(plantLastWateredSeconds * 1000))
+                } else null
+                ReminderScheduler.scheduleWateringReminder(
+                    this, plantId, plantName, lastWatered, plantWateringFreq
+                )
                 Toast.makeText(this, "Plant updated", Toast.LENGTH_SHORT).show()
             }
             .addOnFailureListener { e ->
@@ -462,6 +514,7 @@ class PlantDetailActivity : AppCompatActivity() {
             .collection("plants").document(plantId)
             .delete()
             .addOnSuccessListener {
+                ReminderScheduler.cancelWateringReminder(this, plantId)
                 Toast.makeText(this, "Plant deleted", Toast.LENGTH_SHORT).show()
                 finish()
             }

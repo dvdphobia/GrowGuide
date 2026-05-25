@@ -22,6 +22,7 @@ class LogAdapter(
 
     inner class LogViewHolder(itemView: android.view.View) : RecyclerView.ViewHolder(itemView) {
         val entryText: TextView = itemView.findViewById(R.id.logEntryText)
+        val metricsText: TextView = itemView.findViewById(R.id.logMetricsText)
         val dateText: TextView = itemView.findViewById(R.id.logDateText)
         val editButton: ImageButton = itemView.findViewById(R.id.logEditButton)
         val deleteButton: ImageButton = itemView.findViewById(R.id.logDeleteButton)
@@ -36,6 +37,20 @@ class LogAdapter(
     override fun onBindViewHolder(holder: LogViewHolder, position: Int) {
         val log = logs[position]
         holder.entryText.text = log.entry
+
+        val metrics = buildString {
+            if (log.heightCm > 0) append("${log.heightCm} cm")
+            if (log.leafCount > 0) {
+                if (isNotEmpty()) append(" · ")
+                append("${log.leafCount} leaves")
+            }
+        }
+        if (metrics.isNotEmpty()) {
+            holder.metricsText.text = metrics
+            holder.metricsText.visibility = android.view.View.VISIBLE
+        } else {
+            holder.metricsText.visibility = android.view.View.GONE
+        }
 
         val date = log.createdAt?.toDate()
         if (date != null) {
