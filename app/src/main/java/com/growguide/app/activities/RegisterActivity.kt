@@ -60,6 +60,7 @@ class RegisterActivity : AppCompatActivity() {
                         // Registration success - go to plant list
                         Toast.makeText(this, "Account created!", Toast.LENGTH_SHORT).show()
                         startActivity(Intent(this, MainActivity::class.java))
+                        overridePendingTransition(R.anim.fade_in, R.anim.fade_out)
                         finish()
                     } else {
                         Toast.makeText(
@@ -74,6 +75,7 @@ class RegisterActivity : AppCompatActivity() {
         // "Already have an account?" link → navigate to Login
         loginLink.setOnClickListener {
             startActivity(Intent(this, LoginActivity::class.java))
+            overridePendingTransition(R.anim.slide_in_left, R.anim.slide_out_right)
         }
     }
 }

@@ -1,128 +1,172 @@
 <?xml version="1.0" encoding="utf-8"?>
-<!-- Add Plant form screen -->
-<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.coordinatorlayout.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/green_surface">
+    android:background="@color/background">
 
-    <LinearLayout
+    <!-- App Bar -->
+    <com.google.android.material.appbar.AppBarLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="vertical"
-        android:padding="24dp">
+        android:layout_height="wrap_content">
 
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="@string/add_plant"
-            android:textColor="@color/green_primary"
-            android:textSize="24sp"
-            android:textStyle="bold" />
+        <com.google.android.material.appbar.MaterialToolbar
+            android:id="@+id/toolbar"
+            android:layout_width="match_parent"
+            android:layout_height="?attr/actionBarSize"
+            android:background="@color/primary"
+            app:navigationIcon="@drawable/ic_arrow_back"
+            app:navigationIconTint="@color/on_primary"
+            app:title="@string/add_plant"
+            app:titleTextColor="@color/on_primary" />
+    </com.google.android.material.appbar.AppBarLayout>
 
-        <!-- Photo picker -->
-        <ImageView
-            android:id="@+id/plantPhotoPreview"
-            android:layout_width="120dp"
-            android:layout_height="120dp"
-            android:layout_gravity="center_horizontal"
-            android:layout_marginTop="16dp"
-            android:background="@drawable/bg_card"
-            android:contentDescription="@string/plant_photo"
-            android:scaleType="centerCrop" />
+    <androidx.core.widget.NestedScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        app:layout_behavior="@string/appbar_scrolling_view_behavior">
 
-        <Button
-            android:id="@+id/pickPhotoButton"
-            style="?attr/materialButtonOutlinedStyle"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center_horizontal"
-            android:layout_marginTop="8dp"
-            android:text="Pick Photo" />
-
-        <!-- Plant name field -->
-        <com.google.android.material.textfield.TextInputLayout
-            android:id="@+id/plantNameLayout"
+        <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="16dp"
-            android:hint="@string/plant_name"
-            style="@style/Widget.Material3.TextInputLayout.OutlinedBox">
+            android:orientation="vertical"
+            android:padding="@dimen/space_24">
 
-            <com.google.android.material.textfield.TextInputEditText
-                android:id="@+id/plantNameEditText"
+            <!-- Photo picker with circular preview -->
+            <FrameLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_horizontal">
+
+                <com.google.android.material.imageview.ShapeableImageView
+                    android:id="@+id/plantPhotoPreview"
+                    android:layout_width="140dp"
+                    android:layout_height="140dp"
+                    android:background="@drawable/bg_photo_placeholder"
+                    android:contentDescription="@string/plant_photo"
+                    android:scaleType="centerCrop"
+                    app:shapeAppearanceOverlay="@style/ShapeAppearance.GrowGuide.Large" />
+
+                <!-- Camera icon overlay -->
+                <ImageView
+                    android:layout_width="48dp"
+                    android:layout_height="48dp"
+                    android:layout_gravity="center"
+                    android:src="@drawable/ic_camera"
+                    app:tint="@color/on_surface_variant" />
+            </FrameLayout>
+
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/pickPhotoButton"
+                style="@style/Widget.GrowGuide.Button.Secondary"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_horizontal"
+                android:layout_marginTop="@dimen/space_12"
+                android:text="Pick Photo"
+                android:textSize="@dimen/text_caption"
+                app:strokeColor="@color/outline"
+                app:strokeWidth="1dp" />
+
+            <!-- Form fields -->
+            <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/plantNameLayout"
+                style="@style/Widget.GrowGuide.TextInput"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:inputType="text" />
-        </com.google.android.material.textfield.TextInputLayout>
+                android:layout_marginTop="@dimen/space_24"
+                android:hint="@string/plant_name"
+                app:startIconDrawable="@drawable/ic_plant"
+                app:startIconTint="@color/on_surface_variant">
 
-        <!-- Plant type field -->
-        <com.google.android.material.textfield.TextInputLayout
-            android:id="@+id/plantTypeLayout"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="16dp"
-            android:hint="@string/plant_type"
-            style="@style/Widget.Material3.TextInputLayout.OutlinedBox">
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/plantNameEditText"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:inputType="text"
+                    android:textColor="@color/on_surface" />
+            </com.google.android.material.textfield.TextInputLayout>
 
-            <com.google.android.material.textfield.TextInputEditText
-                android:id="@+id/plantTypeEditText"
+            <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/plantTypeLayout"
+                style="@style/Widget.GrowGuide.TextInput"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:inputType="text" />
-        </com.google.android.material.textfield.TextInputLayout>
+                android:layout_marginTop="@dimen/space_16"
+                android:hint="@string/plant_type"
+                app:startIconDrawable="@drawable/ic_label"
+                app:startIconTint="@color/on_surface_variant">
 
-        <!-- Watering frequency field -->
-        <com.google.android.material.textfield.TextInputLayout
-            android:id="@+id/wateringFreqLayout"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="16dp"
-            android:hint="Water every N days (0 = no reminder)"
-            style="@style/Widget.Material3.TextInputLayout.OutlinedBox">
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/plantTypeEditText"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:inputType="text"
+                    android:textColor="@color/on_surface" />
+            </com.google.android.material.textfield.TextInputLayout>
 
-            <com.google.android.material.textfield.TextInputEditText
-                android:id="@+id/wateringFreqEditText"
+            <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/wateringFreqLayout"
+                style="@style/Widget.GrowGuide.TextInput"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:inputType="number" />
-        </com.google.android.material.textfield.TextInputLayout>
+                android:layout_marginTop="@dimen/space_16"
+                android:hint="Water every N days (0 = no reminder)"
+                app:startIconDrawable="@drawable/ic_water"
+                app:startIconTint="@color/on_surface_variant">
 
-        <!-- Initial notes field -->
-        <com.google.android.material.textfield.TextInputLayout
-            android:id="@+id/notesLayout"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="16dp"
-            android:hint="@string/initial_notes"
-            style="@style/Widget.Material3.TextInputLayout.OutlinedBox">
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/wateringFreqEditText"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:inputType="number"
+                    android:textColor="@color/on_surface" />
+            </com.google.android.material.textfield.TextInputLayout>
 
-            <com.google.android.material.textfield.TextInputEditText
-                android:id="@+id/notesEditText"
+            <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/notesLayout"
+                style="@style/Widget.GrowGuide.TextInput"
                 android:layout_width="match_parent"
-                android:layout_height="120dp"
-                android:gravity="top"
-                android:inputType="textMultiLine" />
-        </com.google.android.material.textfield.TextInputLayout>
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/space_16"
+                android:hint="@string/initial_notes"
+                app:startIconDrawable="@drawable/ic_notes"
+                app:startIconTint="@color/on_surface_variant">
 
-        <!-- Save button -->
-        <Button
-            android:id="@+id/savePlantButton"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="24dp"
-            android:text="@string/save_plant"
-            android:textColor="@color/white"
-            app:backgroundTint="@color/green_primary" />
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/notesEditText"
+                    android:layout_width="match_parent"
+                    android:layout_height="120dp"
+                    android:gravity="top"
+                    android:inputType="textMultiLine"
+                    android:textColor="@color/on_surface" />
+            </com.google.android.material.textfield.TextInputLayout>
 
-        <ProgressBar
-            android:id="@+id/progressBar"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center"
-            android:layout_marginTop="16dp"
-            android:visibility="gone" />
+            <!-- Save button -->
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/savePlantButton"
+                style="@style/Widget.GrowGuide.Button"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/space_28"
+                android:text="@string/save_plant"
+                android:textColor="@color/on_primary"
+                app:backgroundTint="@color/primary" />
 
-    </LinearLayout>
+            <com.google.android.material.progressindicator.CircularProgressIndicator
+                android:id="@+id/progressBar"
+                android:layout_width="32dp"
+                android:layout_height="32dp"
+                android:layout_gravity="center"
+                android:layout_marginTop="@dimen/space_12"
+                android:indeterminate="true"
+                android:visibility="gone"
+                app:indicatorColor="@color/primary"
+                app:trackColor="@android:color/transparent"
+                app:indicatorSize="32dp"
+                app:strokeWidth="3dp" />
 
-</ScrollView>
+        </LinearLayout>
+    </androidx.core.widget.NestedScrollView>
+
+</androidx.coordinatorlayout.widget.CoordinatorLayout>

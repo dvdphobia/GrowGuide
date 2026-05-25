@@ -1,24 +1,70 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <!-- Dark mode green agricultural color scheme -->
-    <color name="green_primary">#4CAF50</color>
-    <color name="green_primary_dark">#388E3C</color>
-    <color name="green_primary_container">#2E4A2F</color>
-    <color name="green_secondary">#66BB6A</color>
-    <color name="green_surface">#1B1B1B</color>
-    <color name="green_on_primary">#FFFFFF</color>
-    <color name="green_on_surface">#A5D6A7</color>
+    <!-- Dark Mode Color Palette -->
 
-    <!-- Chat bubble colors -->
-    <color name="chat_user_bubble">#4CAF50</color>
+    <!-- Primary Colors -->
+    <color name="primary">#40916C</color>
+    <color name="primary_dark">#2D6A4F</color>
+    <color name="primary_container">#1B4332</color>
+    <color name="on_primary">#FFFFFF</color>
+    <color name="on_primary_container">#D8F3DC</color>
+
+    <!-- Secondary Colors -->
+    <color name="secondary">#74C69D</color>
+    <color name="secondary_container">#2D6A4F</color>
+    <color name="on_secondary">#081C15</color>
+    <color name="on_secondary_container">#D8F3DC</color>
+
+    <!-- Tertiary / Accent -->
+    <color name="tertiary">#E9C46A</color>
+    <color name="tertiary_container">#3D2C0B</color>
+    <color name="on_tertiary">#1C1C1C</color>
+
+    <!-- Surface Colors -->
+    <color name="surface">#1E1E1E</color>
+    <color name="surface_variant">#2A2A2A</color>
+    <color name="surface_dim">#121212</color>
+    <color name="on_surface">#E8E8E3</color>
+    <color name="on_surface_variant">#B0B0B0</color>
+
+    <!-- Background -->
+    <color name="background">#121212</color>
+    <color name="on_background">#E8E8E3</color>
+
+    <!-- Outline -->
+    <color name="outline">#3D3D3D</color>
+    <color name="outline_variant">#2A2A2A</color>
+
+    <!-- Error -->
+    <color name="error">#F4A261</color>
+    <color name="error_container">#3D1F1A</color>
+    <color name="on_error">#1C1C1C</color>
+
+    <!-- Status Colors -->
+    <color name="success">#52B788</color>
+    <color name="warning">#E9C46A</color>
+    <color name="info">#74C69D</color>
+
+    <!-- Chat Bubble Colors -->
+    <color name="chat_user_bubble">#40916C</color>
     <color name="chat_user_text">#FFFFFF</color>
-    <color name="chat_ai_bubble">#2C2C2C</color>
-    <color name="chat_ai_text">#E0E0E0</color>
+    <color name="chat_ai_bubble">#2A2A2A</color>
+    <color name="chat_ai_text">#E8E8E3</color>
 
-    <!-- Neutral colors -->
+    <!-- Neutral Colors -->
     <color name="white">#121212</color>
     <color name="black">#FFFFFF</color>
-    <color name="grey_text">#9E9E9E</color>
-    <color name="grey_divider">#424242</color>
-    <color name="error_red">#EF5350</color>
+    <color name="grey_text">#B0B0B0</color>
+    <color name="grey_divider">#3D3D3D</color>
+    <color name="light_grey">#2A2A2A</color>
+    <color name="dark_grey">#E0E0E0</color>
+
+    <!-- Legacy mapping for compatibility -->
+    <color name="green_primary">@color/primary</color>
+    <color name="green_primary_dark">@color/primary_dark</color>
+    <color name="green_primary_container">@color/primary_container</color>
+    <color name="green_secondary">@color/secondary</color>
+    <color name="green_surface">@color/surface_variant</color>
+    <color name="green_on_primary">@color/on_primary</color>
+    <color name="green_on_surface">@color/on_surface</color>
 </resources>

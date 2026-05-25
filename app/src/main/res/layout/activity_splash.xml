@@ -1,39 +1,80 @@
 <?xml version="1.0" encoding="utf-8"?>
-<!-- Splash screen - green background with centered branding -->
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/green_primary">
+    android:background="@color/primary">
 
+    <!-- Background gradient overlay -->
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@drawable/bg_splash_gradient" />
+
+    <!-- Centered branding content -->
     <LinearLayout
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_centerInParent="true"
+        android:layout_gravity="center"
         android:gravity="center"
-        android:orientation="vertical">
+        android:orientation="vertical"
+        android:padding="32dp">
 
-        <!-- App icon placeholder - green leaf emoji as text -->
+        <!-- App icon container with circular background -->
+        <FrameLayout
+            android:layout_width="120dp"
+            android:layout_height="120dp"
+            android:background="@drawable/bg_splash_icon_circle">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:text="🌿"
+                android:textSize="64sp" />
+        </FrameLayout>
+
         <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="🌱"
-            android:textSize="64sp" />
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="16dp"
-            android:text="@string/app_name"
-            android:textColor="@color/white"
-            android:textSize="32sp"
-            android:textStyle="bold" />
-
-        <ProgressBar
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="24dp"
-            android:indeterminateTint="@color/white" />
+            android:text="@string/app_name"
+            android:textColor="@color/white"
+            android:textSize="@dimen/text_display"
+            android:textStyle="bold"
+            android:letterSpacing="0.02" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:text="Your personal plant companion"
+            android:textColor="@color/white"
+            android:textSize="@dimen/text_subtitle"
+            android:alpha="0.8" />
+
+        <!-- Modern indeterminate progress indicator -->
+        <com.google.android.material.progressindicator.CircularProgressIndicator
+            android:layout_width="48dp"
+            android:layout_height="48dp"
+            android:layout_marginTop="32dp"
+            android:indeterminate="true"
+            app:indicatorColor="@color/white"
+            app:trackColor="@android:color/transparent"
+            app:indicatorSize="48dp"
+            app:strokeWidth="4dp" />
 
     </LinearLayout>
 
-</RelativeLayout>
+    <!-- Version text at bottom -->
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center|bottom"
+        android:layout_marginBottom="32dp"
+        android:text="v1.0"
+        android:textColor="@color/white"
+        android:textSize="@dimen/text_caption"
+        android:alpha="0.6" />
+
+</FrameLayout>

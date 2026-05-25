@@ -13,6 +13,8 @@ import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import com.google.android.material.appbar.CollapsingToolbarLayout
+import com.google.android.material.appbar.MaterialToolbar
 import com.google.android.material.textfield.TextInputEditText
 import com.google.firebase.Timestamp
 import com.google.firebase.auth.FirebaseAuth
@@ -68,8 +70,6 @@ class PlantDetailActivity : AppCompatActivity() {
         auth = FirebaseAuth.getInstance()
         db = FirebaseFirestore.getInstance()
 
-        supportActionBar?.setDisplayHomeAsUpEnabled(true)
-
         plantId = intent.getStringExtra("PLANT_ID") ?: ""
         plantName = intent.getStringExtra("PLANT_NAME") ?: ""
         plantType = intent.getStringExtra("PLANT_TYPE") ?: ""
@@ -78,7 +78,12 @@ class PlantDetailActivity : AppCompatActivity() {
         plantLastWateredSeconds = intent.getLongExtra("PLANT_LAST_WATERED", 0L)
         plantWateringFreq = intent.getIntExtra("PLANT_WATERING_FREQ", 0)
 
-        supportActionBar?.title = plantName
+        // Set up Toolbar with CollapsingToolbarLayout
+        val toolbar = findViewById<MaterialToolbar>(R.id.toolbar)
+        val collapsingToolbar = findViewById<CollapsingToolbarLayout>(R.id.collapsingToolbar)
+        setSupportActionBar(toolbar)
+        supportActionBar?.setDisplayHomeAsUpEnabled(true)
+        collapsingToolbar.title = plantName
 
         // --- Section 1: Plant Info ---
         val photoImage = findViewById<ImageView>(R.id.plantDetailPhoto)

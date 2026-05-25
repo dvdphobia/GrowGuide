@@ -6,6 +6,7 @@ import android.os.Handler
 import android.os.Looper
 import androidx.appcompat.app.AppCompatActivity
 import com.google.firebase.auth.FirebaseAuth
+import com.growguide.app.R
 
 /**
  * Splash screen that checks Firebase auth state and routes accordingly.
@@ -16,7 +17,7 @@ class SplashActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(com.growguide.app.R.layout.activity_splash)
+        setContentView(R.layout.activity_splash)
 
         // Short delay so the splash branding is visible before navigating
         Handler(Looper.getMainLooper()).postDelayed({
@@ -24,9 +25,11 @@ class SplashActivity : AppCompatActivity() {
             if (user != null) {
                 // User is already signed in, go straight to the plant list
                 startActivity(Intent(this, MainActivity::class.java))
+                overridePendingTransition(R.anim.fade_in, R.anim.fade_out)
             } else {
                 // No active session, redirect to login
                 startActivity(Intent(this, LoginActivity::class.java))
+                overridePendingTransition(R.anim.fade_in, R.anim.fade_out)
             }
             finish() // Remove splash from back stack
         }, 1500)

@@ -31,7 +31,7 @@ class MainActivity : AppCompatActivity() {
     private lateinit var db: FirebaseFirestore
     private lateinit var plantAdapter: PlantAdapter
     private lateinit var recyclerView: RecyclerView
-    private lateinit var emptyStateText: android.widget.TextView
+    private lateinit var emptyStateLayout: android.widget.LinearLayout
     private lateinit var offlineBanner: android.widget.TextView
     private var plantList = mutableListOf<Plant>()
     private var allPlants = mutableListOf<Plant>()
@@ -47,7 +47,7 @@ class MainActivity : AppCompatActivity() {
         setSupportActionBar(findViewById(R.id.toolbar))
 
         recyclerView = findViewById(R.id.plantRecyclerView)
-        emptyStateText = findViewById(R.id.emptyStateText)
+        emptyStateLayout = findViewById(R.id.emptyStateLayout)
         offlineBanner = findViewById(R.id.offlineBanner)
         val addPlantFab = findViewById<com.google.android.material.floatingactionbutton.FloatingActionButton>(R.id.addPlantFab)
 
@@ -63,11 +63,13 @@ class MainActivity : AppCompatActivity() {
             intent.putExtra("PLANT_LAST_WATERED", plant.lastWatered?.seconds ?: 0L)
             intent.putExtra("PLANT_WATERING_FREQ", plant.wateringFrequency)
             startActivity(intent)
+            overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left)
         }
         recyclerView.adapter = plantAdapter
 
         addPlantFab.setOnClickListener {
             startActivity(Intent(this, AddPlantActivity::class.java))
+            overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left)
         }
 
         monitorConnectivity()
@@ -128,10 +130,10 @@ class MainActivity : AppCompatActivity() {
 
     private fun updateEmptyState() {
         if (plantList.isEmpty()) {
-            emptyStateText.visibility = View.VISIBLE
+            emptyStateLayout.visibility = View.VISIBLE
             recyclerView.visibility = View.GONE
         } else {
-            emptyStateText.visibility = View.GONE
+            emptyStateLayout.visibility = View.GONE
             recyclerView.visibility = View.VISIBLE
         }
     }
@@ -156,6 +158,7 @@ class MainActivity : AppCompatActivity() {
         return when (item.itemId) {
             R.id.action_profile -> {
                 startActivity(Intent(this, ProfileActivity::class.java))
+                overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left)
                 true
             }
             R.id.action_logout -> {
@@ -163,6 +166,7 @@ class MainActivity : AppCompatActivity() {
                 val intent = Intent(this, LoginActivity::class.java)
                 intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
                 startActivity(intent)
+                overridePendingTransition(R.anim.fade_in, R.anim.fade_out)
                 finish()
                 true
             }

@@ -1,184 +1,251 @@
 <?xml version="1.0" encoding="utf-8"?>
-<!-- Plant detail screen with 3 sections: info, log, AI chat -->
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<!-- Modern plant detail screen with 3 sections: info, log, AI chat -->
+<androidx.coordinatorlayout.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    android:background="@color/background">
 
-    <ScrollView
-        android:layout_width="0dp"
-        android:layout_height="0dp"
+    <!-- App Bar with Collapsing Toolbar for hero image -->
+    <com.google.android.material.appbar.AppBarLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:fitsSystemWindows="true">
+
+        <com.google.android.material.appbar.CollapsingToolbarLayout
+            android:id="@+id/collapsingToolbar"
+            android:layout_width="match_parent"
+            android:layout_height="220dp"
+            app:layout_scrollFlags="scroll|exitUntilCollapsed"
+            app:contentScrim="@color/primary"
+            app:expandedTitleGravity="bottom|start"
+            app:expandedTitleTextAppearance="@style/TextAppearance.GrowGuide.ExpandedTitle">
+
+            <!-- Hero Image -->
+            <ImageView
+                android:id="@+id/plantDetailPhoto"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:scaleType="centerCrop"
+                android:contentDescription="@string/plant_photo"
+                android:background="@drawable/bg_card"
+                app:layout_collapseMode="parallax" />
+
+            <!-- Gradient overlay for text readability -->
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="80dp"
+                android:layout_gravity="bottom"
+                android:background="@drawable/bg_image_gradient" />
+
+            <!-- Toolbar -->
+            <com.google.android.material.appbar.MaterialToolbar
+                android:id="@+id/toolbar"
+                android:layout_width="match_parent"
+                android:layout_height="?attr/actionBarSize"
+                app:layout_collapseMode="pin"
+                app:navigationIcon="@drawable/ic_arrow_back"
+                app:navigationIconTint="@color/on_primary" />
+
+        </com.google.android.material.appbar.CollapsingToolbarLayout>
+    </com.google.android.material.appbar.AppBarLayout>
+
+    <androidx.core.widget.NestedScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
         android:fillViewport="true"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintTop_toTopOf="parent">
+        app:layout_behavior="@string/appbar_scrolling_view_behavior">
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="vertical"
-            android:padding="16dp">
+            android:padding="@dimen/space_16">
 
-            <!-- ── Section 1: Plant Info ── -->
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="@string/plant_info"
-                android:textColor="@color/green_primary"
-                android:textSize="20sp"
-                android:textStyle="bold" />
-
-            <androidx.cardview.widget.CardView
+            <!-- ── Section 1: Plant Info Card ── -->
+            <com.google.android.material.card.MaterialCardView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="8dp"
-                app:cardCornerRadius="12dp"
-                app:cardElevation="2dp">
+                app:cardCornerRadius="@dimen/card_corner_radius"
+                app:cardElevation="@dimen/card_elevation"
+                app:cardBackgroundColor="@color/surface">
 
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:orientation="vertical"
-                    android:padding="16dp">
+                    android:padding="@dimen/space_20">
 
-                    <ImageView
-                        android:id="@+id/plantDetailPhoto"
-                        android:layout_width="match_parent"
-                        android:layout_height="180dp"
-                        android:background="@drawable/bg_card"
-                        android:contentDescription="@string/plant_photo"
-                        android:scaleType="centerCrop" />
-
+                    <!-- Plant Name and Type -->
                     <TextView
                         android:id="@+id/plantNameText"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_marginTop="12dp"
-                        android:textSize="22sp"
+                        android:textColor="@color/on_surface"
+                        android:textSize="@dimen/text_headline"
                         android:textStyle="bold" />
 
                     <TextView
                         android:id="@+id/plantTypeText"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_marginTop="4dp"
-                        android:textColor="@color/grey_text"
-                        android:textSize="14sp" />
+                        android:layout_marginTop="@dimen/space_4"
+                        android:textColor="@color/on_surface_variant"
+                        android:textSize="@dimen/text_body" />
 
                     <TextView
                         android:id="@+id/plantDateText"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_marginTop="2dp"
-                        android:textColor="@color/grey_text"
-                        android:textSize="12sp" />
+                        android:layout_marginTop="@dimen/space_4"
+                        android:textColor="@color/on_surface_variant"
+                        android:textSize="@dimen/text_caption" />
 
-                    <!-- Watering status -->
-                    <LinearLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_marginTop="8dp"
-                        android:gravity="center_vertical"
-                        android:orientation="horizontal">
-
-                        <TextView
-                            android:id="@+id/wateringStatusText"
-                            android:layout_width="0dp"
-                            android:layout_height="wrap_content"
-                            android:layout_weight="1"
-                            android:textColor="@color/green_primary"
-                            android:textSize="14sp"
-                            android:textStyle="bold" />
-
-                        <Button
-                            android:id="@+id/waterNowButton"
-                            style="?attr/materialButtonOutlinedStyle"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:text="Water Now"
-                            android:textColor="@color/green_primary"
-                            android:textSize="12sp" />
-                    </LinearLayout>
-
+                    <!-- Divider -->
                     <View
                         android:layout_width="match_parent"
                         android:layout_height="1dp"
-                        android:layout_marginTop="12dp"
-                        android:layout_marginBottom="12dp"
-                        android:background="@color/grey_divider" />
+                        android:layout_marginVertical="@dimen/space_16"
+                        android:background="@color/outline_variant" />
 
+                    <!-- Watering Status -->
                     <LinearLayout
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
+                        android:gravity="center_vertical"
                         android:orientation="horizontal">
 
-                        <Button
-                            android:id="@+id/editPlantButton"
-                            style="?attr/materialButtonOutlinedStyle"
+                        <LinearLayout
                             android:layout_width="0dp"
                             android:layout_height="wrap_content"
                             android:layout_weight="1"
-                            android:text="Edit"
-                            android:textColor="@color/green_primary" />
+                            android:orientation="vertical">
 
-                        <Button
-                            android:id="@+id/deletePlantButton"
-                            style="?attr/materialButtonOutlinedStyle"
-                            android:layout_width="0dp"
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="Watering Status"
+                                android:textColor="@color/on_surface_variant"
+                                android:textSize="@dimen/text_caption"
+                                android:textAllCaps="true"
+                                android:letterSpacing="0.08" />
+
+                            <TextView
+                                android:id="@+id/wateringStatusText"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_marginTop="@dimen/space_4"
+                                android:textColor="@color/primary"
+                                android:textSize="@dimen/text_subtitle"
+                                android:textStyle="bold" />
+                        </LinearLayout>
+
+                        <com.google.android.material.button.MaterialButton
+                            android:id="@+id/waterNowButton"
+                            style="@style/Widget.GrowGuide.Button.Secondary"
+                            android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:layout_marginStart="8dp"
-                            android:layout_weight="1"
-                            android:text="Delete"
-                            android:textColor="@android:color/holo_red_dark" />
+                            android:text="Water Now"
+                            android:textSize="@dimen/text_caption"
+                            app:strokeColor="@color/primary"
+                            app:strokeWidth="1dp" />
                     </LinearLayout>
+
+                    <!-- Notes -->
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="@dimen/space_16"
+                        android:text="Notes"
+                        android:textColor="@color/on_surface_variant"
+                        android:textSize="@dimen/text_caption"
+                        android:textAllCaps="true"
+                        android:letterSpacing="0.08" />
 
                     <TextView
                         android:id="@+id/plantNotesText"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_marginTop="12dp"
-                        android:textSize="14sp" />
+                        android:layout_marginTop="@dimen/space_8"
+                        android:textColor="@color/on_surface"
+                        android:textSize="@dimen/text_body"
+                        android:lineSpacingMultiplier="1.2" />
+
+                    <!-- Action buttons -->
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="@dimen/space_20"
+                        android:orientation="horizontal">
+
+                        <com.google.android.material.button.MaterialButton
+                            android:id="@+id/editPlantButton"
+                            style="@style/Widget.GrowGuide.Button.Secondary"
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:text="@string/edit"
+                            app:strokeColor="@color/outline"
+                            app:strokeWidth="1dp" />
+
+                        <com.google.android.material.button.MaterialButton
+                            android:id="@+id/deletePlantButton"
+                            style="@style/Widget.GrowGuide.Button.Secondary"
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_marginStart="@dimen/space_12"
+                            android:layout_weight="1"
+                            android:text="@string/delete"
+                            android:textColor="@color/error"
+                            app:strokeColor="@color/error"
+                            app:strokeWidth="1dp" />
+                    </LinearLayout>
 
                 </LinearLayout>
-
-            </androidx.cardview.widget.CardView>
+            </com.google.android.material.card.MaterialCardView>
 
             <!-- ── Section 2: Growth Log ── -->
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="24dp"
+                android:layout_marginTop="@dimen/space_32"
                 android:text="@string/growth_log"
-                android:textColor="@color/green_primary"
-                android:textSize="20sp"
+                android:textColor="@color/on_surface"
+                android:textSize="@dimen/text_title"
                 android:textStyle="bold" />
 
             <!-- Add log entry input -->
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="8dp"
+                android:layout_marginTop="@dimen/space_16"
                 android:gravity="center_vertical"
                 android:orientation="horizontal">
 
-                <EditText
-                    android:id="@+id/logEntryEditText"
+                <com.google.android.material.textfield.TextInputLayout
+                    style="@style/Widget.GrowGuide.TextInput"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
                     android:hint="@string/add_log_entry"
-                    android:inputType="text"
-                    android:minHeight="48dp" />
+                    app:boxBackgroundColor="@color/surface">
 
-                <Button
+                    <com.google.android.material.textfield.TextInputEditText
+                        android:id="@+id/logEntryEditText"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:inputType="text"
+                        android:textColor="@color/on_surface" />
+                </com.google.android.material.textfield.TextInputLayout>
+
+                <com.google.android.material.button.MaterialButton
                     android:id="@+id/addLogButton"
+                    style="@style/Widget.GrowGuide.Button"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginStart="8dp"
+                    android:layout_marginStart="@dimen/space_12"
                     android:text="@string/save_plant"
-                    android:textColor="@color/white"
-                    app:backgroundTint="@color/green_primary" />
+                    android:textSize="@dimen/text_caption" />
 
             </LinearLayout>
 
@@ -187,7 +254,7 @@
                 android:id="@+id/logRecyclerView"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="8dp"
+                android:layout_marginTop="@dimen/space_12"
                 android:nestedScrollingEnabled="false" />
 
             <!-- Empty state for logs -->
@@ -195,20 +262,20 @@
                 android:id="@+id/noLogsText"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="8dp"
+                android:layout_marginTop="@dimen/space_12"
                 android:text="No log entries yet."
-                android:textColor="@color/grey_text"
-                android:textSize="14sp"
+                android:textColor="@color/on_surface_variant"
+                android:textSize="@dimen/text_body"
                 android:visibility="gone" />
 
             <!-- ── Section 3: AI Chat ── -->
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="24dp"
+                android:layout_marginTop="@dimen/space_32"
                 android:text="@string/ai_chat"
-                android:textColor="@color/green_primary"
-                android:textSize="20sp"
+                android:textColor="@color/on_surface"
+                android:textSize="@dimen/text_title"
                 android:textStyle="bold" />
 
             <!-- AI welcome message shown when chat is empty -->
@@ -216,10 +283,10 @@
                 android:id="@+id/chatWelcomeText"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="8dp"
+                android:layout_marginTop="@dimen/space_8"
                 android:text="Ask me anything about your plant!"
-                android:textColor="@color/grey_text"
-                android:textSize="14sp"
+                android:textColor="@color/on_surface_variant"
+                android:textSize="@dimen/text_body"
                 android:visibility="gone" />
 
             <!-- Quick question chips shown when chat is empty -->
@@ -227,7 +294,7 @@
                 android:id="@+id/chatSuggestionsScroll"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="8dp"
+                android:layout_marginTop="@dimen/space_12"
                 android:scrollbars="none"
                 android:visibility="gone">
 
@@ -237,60 +304,52 @@
                     android:layout_height="wrap_content"
                     android:orientation="horizontal">
 
-                    <TextView
+                    <com.google.android.material.chip.Chip
                         android:id="@+id/chipCare"
+                        style="@style/Widget.Material3.Chip.Filter"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:background="@drawable/bg_chip"
-                        android:paddingStart="14dp"
-                        android:paddingTop="8dp"
-                        android:paddingEnd="14dp"
-                        android:paddingBottom="8dp"
                         android:text="How do I care for this plant?"
-                        android:textColor="@color/green_on_surface"
-                        android:textSize="13sp" />
+                        android:textSize="@dimen/text_caption"
+                        app:chipBackgroundColor="@color/primary_container"
+                        app:chipStrokeColor="@color/outline_variant"
+                        app:chipStrokeWidth="1dp" />
 
-                    <TextView
+                    <com.google.android.material.chip.Chip
                         android:id="@+id/chipWater"
+                        style="@style/Widget.Material3.Chip.Filter"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_marginStart="8dp"
-                        android:background="@drawable/bg_chip"
-                        android:paddingStart="14dp"
-                        android:paddingTop="8dp"
-                        android:paddingEnd="14dp"
-                        android:paddingBottom="8dp"
+                        android:layout_marginStart="@dimen/space_8"
                         android:text="When should I water it?"
-                        android:textColor="@color/green_on_surface"
-                        android:textSize="13sp" />
+                        android:textSize="@dimen/text_caption"
+                        app:chipBackgroundColor="@color/primary_container"
+                        app:chipStrokeColor="@color/outline_variant"
+                        app:chipStrokeWidth="1dp" />
 
-                    <TextView
+                    <com.google.android.material.chip.Chip
                         android:id="@+id/chipSunlight"
+                        style="@style/Widget.Material3.Chip.Filter"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_marginStart="8dp"
-                        android:background="@drawable/bg_chip"
-                        android:paddingStart="14dp"
-                        android:paddingTop="8dp"
-                        android:paddingEnd="14dp"
-                        android:paddingBottom="8dp"
-                        android:text="How much sunlight does it need?"
-                        android:textColor="@color/green_on_surface"
-                        android:textSize="13sp" />
+                        android:layout_marginStart="@dimen/space_8"
+                        android:text="Sunlight needs?"
+                        android:textSize="@dimen/text_caption"
+                        app:chipBackgroundColor="@color/primary_container"
+                        app:chipStrokeColor="@color/outline_variant"
+                        app:chipStrokeWidth="1dp" />
 
-                    <TextView
+                    <com.google.android.material.chip.Chip
                         android:id="@+id/chipProblems"
+                        style="@style/Widget.Material3.Chip.Filter"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_marginStart="8dp"
-                        android:background="@drawable/bg_chip"
-                        android:paddingStart="14dp"
-                        android:paddingTop="8dp"
-                        android:paddingEnd="14dp"
-                        android:paddingBottom="8dp"
-                        android:text="What are common problems?"
-                        android:textColor="@color/green_on_surface"
-                        android:textSize="13sp" />
+                        android:layout_marginStart="@dimen/space_8"
+                        android:text="Common problems?"
+                        android:textSize="@dimen/text_caption"
+                        app:chipBackgroundColor="@color/primary_container"
+                        app:chipStrokeColor="@color/outline_variant"
+                        app:chipStrokeWidth="1dp" />
                 </LinearLayout>
             </HorizontalScrollView>
 
@@ -299,34 +358,45 @@
                 android:id="@+id/chatRecyclerView"
                 android:layout_width="match_parent"
                 android:layout_height="300dp"
-                android:layout_marginTop="8dp"
-                android:background="@drawable/bg_card" />
+                android:layout_marginTop="@dimen/space_12"
+                android:background="@drawable/bg_chat_container"
+                android:padding="@dimen/space_12" />
 
             <!-- Chat input row -->
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="8dp"
+                android:layout_marginTop="@dimen/space_12"
                 android:gravity="center_vertical"
-                android:orientation="horizontal">
+                android:orientation="horizontal"
+                android:background="@drawable/bg_chat_input"
+                android:padding="@dimen/space_8">
 
-                <EditText
-                    android:id="@+id/chatInputEditText"
+                <com.google.android.material.textfield.TextInputLayout
+                    style="@style/Widget.GrowGuide.TextInput"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
                     android:hint="@string/type_message"
-                    android:inputType="text" />
+                    app:boxBackgroundColor="@color/surface">
+
+                    <com.google.android.material.textfield.TextInputEditText
+                        android:id="@+id/chatInputEditText"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:inputType="text"
+                        android:textColor="@color/on_surface" />
+                </com.google.android.material.textfield.TextInputLayout>
 
                 <ImageButton
                     android:id="@+id/sendMessageButton"
                     android:layout_width="48dp"
                     android:layout_height="48dp"
-                    android:layout_marginStart="8dp"
-                    android:background="@drawable/bg_chat_user"
+                    android:layout_marginStart="@dimen/space_8"
+                    android:background="@drawable/bg_send_button"
                     android:contentDescription="@string/send"
-                    android:src="@android:drawable/ic_menu_send"
-                    android:tint="@color/white" />
+                    android:src="@drawable/ic_send"
+                    app:tint="@color/on_primary" />
 
             </LinearLayout>
 
@@ -335,11 +405,10 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
-                android:layout_marginTop="8dp"
+                android:layout_marginTop="@dimen/space_8"
                 android:visibility="gone" />
 
         </LinearLayout>
+    </androidx.core.widget.NestedScrollView>
 
-    </ScrollView>
-
-</androidx.constraintlayout.widget.ConstraintLayout>
+</androidx.coordinatorlayout.widget.CoordinatorLayout>

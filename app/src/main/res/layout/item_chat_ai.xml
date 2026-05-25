@@ -1,19 +1,37 @@
 <?xml version="1.0" encoding="utf-8"?>
-<!-- AI chat bubble - left aligned, grey background -->
+<!-- AI chat bubble - left aligned, surface variant color -->
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:gravity="start"
-    android:padding="6dp">
+    android:paddingHorizontal="@dimen/space_12"
+    android:paddingVertical="@dimen/space_4">
 
-    <TextView
-        android:id="@+id/messageText"
+    <com.google.android.material.imageview.ShapeableImageView
+        android:layout_width="@dimen/chat_avatar_size"
+        android:layout_height="@dimen/chat_avatar_size"
+        android:layout_marginEnd="@dimen/space_8"
+        android:background="@color/primary_container"
+        app:shapeAppearanceOverlay="@style/ShapeAppearance.GrowGuide.Small" />
+
+    <com.google.android.material.card.MaterialCardView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:background="@drawable/bg_chat_ai"
-        android:maxWidth="280dp"
-        android:padding="12dp"
-        android:textColor="@color/chat_ai_text"
-        android:textSize="14sp" />
+        app:cardCornerRadius="16dp"
+        app:cardBackgroundColor="@color/surface_variant"
+        app:cardElevation="0dp">
+
+        <TextView
+            android:id="@+id/messageText"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:maxWidth="260dp"
+            android:paddingHorizontal="@dimen/space_16"
+            android:paddingVertical="@dimen/space_12"
+            android:textColor="@color/chat_ai_text"
+            android:textSize="@dimen/text_body"
+            android:lineSpacingMultiplier="1.2" />
+    </com.google.android.material.card.MaterialCardView>
 
 </LinearLayout>

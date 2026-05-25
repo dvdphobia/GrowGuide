@@ -52,6 +52,7 @@ class LoginActivity : AppCompatActivity() {
                     if (task.isSuccessful) {
                         // Auth succeeded, go to plant list
                         startActivity(Intent(this, MainActivity::class.java))
+                        overridePendingTransition(R.anim.fade_in, R.anim.fade_out)
                         finish() // Don't let user press back to login
                     } else {
                         // Show the Firebase error message
@@ -67,6 +68,7 @@ class LoginActivity : AppCompatActivity() {
         // "Don't have an account?" link → navigate to Register screen
         registerLink.setOnClickListener {
             startActivity(Intent(this, RegisterActivity::class.java))
+            overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left)
         }
     }
 }
